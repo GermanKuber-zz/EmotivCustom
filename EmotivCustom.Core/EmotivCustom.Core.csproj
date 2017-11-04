@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Roslynator" Version="0.2.8" />
+    <PackageReference Include="Roslynator.Analyzers" Version="1.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EmotivCustom.Sdk\EmotivCustom.Sdk.csproj" />
+  </ItemGroup>
+
+</Project>
