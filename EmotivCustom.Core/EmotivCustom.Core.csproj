@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Roslynator" Version="0.2.8" />
-    <PackageReference Include="Roslynator.Analyzers" Version="1.5.0" />
+    <PackageReference Include="Roslynator" Version="0.2.10" />
+    <PackageReference Include="Roslynator.Analyzers" Version="1.6.0-rc" />
   </ItemGroup>
 
   <ItemGroup>

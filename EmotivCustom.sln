@@ -1,13 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmotivCustom.Console", "EmotivCustom.Console\EmotivCustom.Console.csproj", "{FDF73DCD-2BB0-4433-92CF-0973C505FBAF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmotivCustom.Sdk", "EmotivCustom.Sdk\EmotivCustom.Sdk.csproj", "{CE54A564-36D5-48DB-9608-06BE12E0EF65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmotivCustom.Core", "EmotivCustom.Core\EmotivCustom.Core.csproj", "{DBD3D707-06F6-46AD-87BA-FC7B802FCC32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmotivCustom.Core", "EmotivCustom.Core\EmotivCustom.Core.csproj", "{DBD3D707-06F6-46AD-87BA-FC7B802FCC32}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmotivCustom.Server", "EmotivCustom.Server\EmotivCustom.Server.csproj", "{C6225725-74C7-4E9C-BA72-DF16C31712E2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmotivCustom.SerialPortDriver", "EmotivCustom.SerialPort\EmotivCustom.SerialPortDriver.csproj", "{5BE5181C-C549-4E1C-81B5-FD27F7CF40F0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmotivCustom.Lights", "EmotivCustom.Lights\EmotivCustom.Lights.csproj", "{23B63764-31EA-4E72-A281-2B98D59CDBD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmotivCustom.Lights.Test", "EmotivCustom.Lights.Test\EmotivCustom.Lights.Test.csproj", "{CCA49491-148F-4AA2-A1D1-5A76B4AAD215}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,22 @@ Global
 		{DBD3D707-06F6-46AD-87BA-FC7B802FCC32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBD3D707-06F6-46AD-87BA-FC7B802FCC32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBD3D707-06F6-46AD-87BA-FC7B802FCC32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6225725-74C7-4E9C-BA72-DF16C31712E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6225725-74C7-4E9C-BA72-DF16C31712E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6225725-74C7-4E9C-BA72-DF16C31712E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6225725-74C7-4E9C-BA72-DF16C31712E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BE5181C-C549-4E1C-81B5-FD27F7CF40F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE5181C-C549-4E1C-81B5-FD27F7CF40F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE5181C-C549-4E1C-81B5-FD27F7CF40F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE5181C-C549-4E1C-81B5-FD27F7CF40F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23B63764-31EA-4E72-A281-2B98D59CDBD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23B63764-31EA-4E72-A281-2B98D59CDBD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23B63764-31EA-4E72-A281-2B98D59CDBD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23B63764-31EA-4E72-A281-2B98D59CDBD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCA49491-148F-4AA2-A1D1-5A76B4AAD215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCA49491-148F-4AA2-A1D1-5A76B4AAD215}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCA49491-148F-4AA2-A1D1-5A76B4AAD215}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCA49491-148F-4AA2-A1D1-5A76B4AAD215}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

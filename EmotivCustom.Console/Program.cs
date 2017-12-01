@@ -13,19 +13,25 @@ using System.Collections.Generic;
 using System.Text;
 using Emotiv;
 using System.Reactive.Linq;
+using EmotivCustom.SerialPortDriver;
+using System.Threading.Tasks;
 
 namespace MultiDongles
 {
     class Program
     {
         EmoEngine engine;
+        private  SerialPortInterface _serialPortInterface;
+
         static void Main(string[] args)
         {
             Program program = new Program();
-
+            program.Serial();
             program.mainLoop();
         }
-
+        void Serial() {
+            _serialPortInterface = new SerialPortInterface("COM5");
+        }
         void mainLoop()
         {
             var emoWrapper = new EmoWrapper(ConnectedTypeEnum.Emulator);
@@ -36,6 +42,16 @@ namespace MultiDongles
 
             emoWrapper.FacialExpression.Subscribe(e =>
             {
+                if (e.Eyes.Type == EyeExpressionEnum.Blink) {
+                    _serialPortInterface.Write(07, 0);
+                    _serialPortInterface.Write(07, 250);
+                    Task.Factory.StartNew(() =>
+                    {
+                        Task.Delay(500).Wait();
+                        Console.WriteLine("Done");
+                        _serialPortInterface.Write(07, 0);
+                    });
+                }
              
             });
 
