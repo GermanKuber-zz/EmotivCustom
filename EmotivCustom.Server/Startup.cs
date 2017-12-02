@@ -14,44 +14,6 @@ using MultiDongles;
 
 namespace EmotivCustom.Server
 {
-    public interface ISocketServerService
-    {
-        WebSocket WebSocket { get; set; }
-        HttpContext Context { get; set; }
-        Task AcceptWebSocketAsync(HttpContext context);
-        Task SendMessage(string message);
-    }
-    public class SocketServerService : ISocketServerService
-    {
-        public WebSocket WebSocket { get; set; }
-        public HttpContext Context { get; set; }
-
-        public async Task AcceptWebSocketAsync(HttpContext context)
-        {
-            Context = context;
-            WebSocket = await context.WebSockets.AcceptWebSocketAsync();
-
-        }
-        public async Task SendMessage(string message) {
-
-            try
-            {
-
-                byte[] array = Encoding.ASCII.GetBytes(message);
-          
-
-                await WebSocket.SendAsync(new ArraySegment<byte>(array, 0, array.Count()), WebSocketMessageType.Text, true, CancellationToken.None);
-
-
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-            }
-        
-    }
     public class Startup
     {
         // This method gets called by the runtime. Use this method to add services to the container.

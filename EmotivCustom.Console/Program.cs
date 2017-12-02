@@ -22,7 +22,7 @@ namespace MultiDongles
     {
         EmoEngine engine;
         private SerialPortInterface _serialPortInterface;
-        private const int BLINK = 01;
+        private const int BLINK = 07;
         private const int UPPER_FACE_FROWN = 02;
         private const int UPPER_FACE_SURPRISE = 03;
         private const int LOWER_FACE_SMILE = 04;
