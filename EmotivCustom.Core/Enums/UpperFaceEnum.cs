@@ -2,7 +2,7 @@
 {
     public enum UpperFaceEnum
     {
-        RaiseBrow,
+        Surprise,
         FurrowBrow
     }
 }

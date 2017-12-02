@@ -162,10 +162,14 @@ namespace MultiDongles
                     //recibo todos los eventos de la face
                     EmoState es = evt.EventArgs.emoState;
 
-                    //Indica si el evento recibido es del tipo face
+                    //Indica si el evento recibido es del tipo Lower face
                     //tambien en caso que se reciba un evento repetido, y se verifique que ninguna propiedad se modifico de face
                     //esta variable tmb mantendra en false
-                    var wasFaceExpression = false;
+                    var wasFaceLowerExpression = false;
+                    //Indica si el evento recibido es del tipo Upper face
+                    //tambien en caso que se reciba un evento repetido, y se verifique que ninguna propiedad se modifico de face
+                    //esta variable tmb mantendra en false
+                    var wasFaceUpperExpression = false;
                     //IDEM anterior
                     //indica si el evento es del tipo eye
                     //tambien en caso que se reciba un evento repetido, y se verifique que ninguna propiedad se modifico de face
@@ -177,12 +181,16 @@ namespace MultiDongles
                     if (!wasEye)
                     {
                         //Si no fue un evento del tipo eye
-                        wasFaceExpression = CheckFaceExpression(es);
-                        if (wasFaceExpression)
-                            Logger.Write($"Facial Expression - Type: {_facialExpressionDto.LowerFace.Type} - Power: {_facialExpressionDto.LowerFace.Power}");
+                        wasFaceLowerExpression = CheckLowerFaceExpression(es);
+                        if (wasFaceLowerExpression)
+                            Logger.Write($"Facial Lower Expression - Type: {_facialExpressionDto.LowerFace.Type} - Power: {_facialExpressionDto.LowerFace.Power}");
+                        //Si no fue un evento del tipo eye
+                        wasFaceUpperExpression = CheckUpperFaceExpression(es);
+                        if (wasFaceUpperExpression)
+                            Logger.Write($"Facial Upper Expression - Type: {_facialExpressionDto.UpperFace.Type} - Power: {_facialExpressionDto.UpperFace.Power}");
                     }
                     //En caso que el evento haya sido de alguno de los tipos, quiere decir que alguna propiedad se haya upgradeado se retorna el dto
-                    if (wasEye || wasFaceExpression)
+                    if (wasEye || wasFaceLowerExpression || wasFaceUpperExpression)
                         return _facialExpressionDto;
 
                     else
@@ -202,42 +210,58 @@ namespace MultiDongles
         /// </summary>
         /// <param name="emoState">Evento recibido</param>
         /// <returns></returns>
-        private bool CheckFaceExpression(EmoState emoState)
+        private bool CheckLowerFaceExpression(EmoState emoState)
         {
             var wasLowerExpression = false;
             var power = emoState.FacialExpressionGetLowerFaceActionPower();
             if (emoState.FacialExpressionGetLowerFaceAction() == EdkDll.IEE_FacialExpressionAlgo_t.FE_SMILE)
             {
                 wasLowerExpression = _facialExpressionDto.LowerFace.IsTheSameThanPrevious(_facialExpressionDto.LowerFace.Type, power);
-                _facialExpressionDto.LowerFace.Power = power;
-                _facialExpressionDto.LowerFace.Type = LowerFaceEnum.Smile;
+                _facialExpressionDto.LowerFace.Change(LowerFaceEnum.Smile, power);
             }
             if (emoState.FacialExpressionGetLowerFaceAction() == EdkDll.IEE_FacialExpressionAlgo_t.FE_CLENCH)
             {
                 wasLowerExpression = _facialExpressionDto.LowerFace.IsTheSameThanPrevious(_facialExpressionDto.LowerFace.Type, power); ;
-                _facialExpressionDto.LowerFace.Power = power;
-                _facialExpressionDto.LowerFace.Type = LowerFaceEnum.Clench;
+                _facialExpressionDto.LowerFace.Change(LowerFaceEnum.Clench, power);
             }
             if (emoState.FacialExpressionGetLowerFaceAction() == EdkDll.IEE_FacialExpressionAlgo_t.FE_LAUGH)
             {
                 wasLowerExpression = _facialExpressionDto.LowerFace.IsTheSameThanPrevious(_facialExpressionDto.LowerFace.Type, power); ;
-                _facialExpressionDto.LowerFace.Power = power;
-                _facialExpressionDto.LowerFace.Type = LowerFaceEnum.Laugh;
+                _facialExpressionDto.LowerFace.Change(LowerFaceEnum.Laugh, power);
+
             }
 
             if (emoState.FacialExpressionGetLowerFaceAction() == EdkDll.IEE_FacialExpressionAlgo_t.FE_SMIRK_LEFT)
             {
                 wasLowerExpression = _facialExpressionDto.LowerFace.IsTheSameThanPrevious(_facialExpressionDto.LowerFace.Type, power); ;
-                _facialExpressionDto.LowerFace.Power = power;
-                _facialExpressionDto.LowerFace.Type = LowerFaceEnum.SmirkLeft;
+                _facialExpressionDto.LowerFace.Change(LowerFaceEnum.SmirkLeft, power);
+
             }
             if (emoState.FacialExpressionGetLowerFaceAction() == EdkDll.IEE_FacialExpressionAlgo_t.FE_SMIRK_RIGHT)
             {
                 wasLowerExpression = _facialExpressionDto.LowerFace.IsTheSameThanPrevious(_facialExpressionDto.LowerFace.Type, power); ;
-                _facialExpressionDto.LowerFace.Power = power;
-                _facialExpressionDto.LowerFace.Type = LowerFaceEnum.SmirkRight;
+                _facialExpressionDto.LowerFace.Change(LowerFaceEnum.SmirkRight, power);
+
             }
             return wasLowerExpression;
+        }
+
+        private bool CheckUpperFaceExpression(EmoState emoState)
+        {
+            var wasUpperExpression = false;
+            var power = emoState.FacialExpressionGetUpperFaceActionPower();
+            if (emoState.FacialExpressionGetUpperFaceAction() == EdkDll.IEE_FacialExpressionAlgo_t.FE_SUPRISE)
+            {
+                wasUpperExpression = _facialExpressionDto.UpperFace.IsTheSameThanPrevious(_facialExpressionDto.UpperFace.Type, power);
+                _facialExpressionDto.UpperFace.Change(UpperFaceEnum.Surprise, power);
+            }
+            if (emoState.FacialExpressionGetUpperFaceAction() == EdkDll.IEE_FacialExpressionAlgo_t.FE_FROWN)
+            {
+                wasUpperExpression = _facialExpressionDto.UpperFace.IsTheSameThanPrevious(_facialExpressionDto.UpperFace.Type, power); ;
+                _facialExpressionDto.UpperFace.Change(UpperFaceEnum.FurrowBrow, power);
+            }
+
+            return wasUpperExpression;
         }
 
 
@@ -253,28 +277,30 @@ namespace MultiDongles
             if (emoState.FacialExpressionIsBlink())
             {
                 wasEyes = true;
+                _facialExpressionDto.Eyes.Change(EyeExpressionEnum.Blink);
 
-                _facialExpressionDto.Eyes.Type = EyeExpressionEnum.Blink;
             }
             else if (emoState.FacialExpressionIsLeftWink())
             {
                 wasEyes = true;
-                _facialExpressionDto.Eyes.Type = EyeExpressionEnum.WinkLeft;
+                _facialExpressionDto.Eyes.Change(EyeExpressionEnum.WinkLeft);
             }
             else if (emoState.FacialExpressionIsRightWink())
             {
                 wasEyes = true;
-                _facialExpressionDto.Eyes.Type = EyeExpressionEnum.WinkRight;
+                _facialExpressionDto.Eyes.Change(EyeExpressionEnum.WinkRight);
             }
             else if (emoState.FacialExpressionIsLookingLeft() == 1)
             {
                 wasEyes = true;
-                _facialExpressionDto.Eyes.Type = EyeExpressionEnum.LookLeft;
+                _facialExpressionDto.Eyes.Change(EyeExpressionEnum.LookLeft);
+
             }
             else if (emoState.FacialExpressionIsLookingRight() == 1)
             {
                 wasEyes = true;
-                _facialExpressionDto.Eyes.Type = EyeExpressionEnum.LookRight;
+                _facialExpressionDto.Eyes.Change(EyeExpressionEnum.LookRight);
+
             }
             return wasEyes;
         }

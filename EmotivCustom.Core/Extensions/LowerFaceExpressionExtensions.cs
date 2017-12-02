@@ -30,11 +30,23 @@ namespace EmotivCustom.Core.Extensions
             if (emoState.MentalCommandGetCurrentAction() == typeToCompare)
             {
                 //wasLowerExpression = _facialExpressionDto.LowerFace.IsTheSameThanPrevious(_facialExpressionDto.LowerFace.Type, power);
-                mentalCommand.Power = powerToSet;
-                mentalCommand.Type = typeToSet;
+                mentalCommand.Change(typeToSet, powerToSet);
                 return true;
             }
             return false;
         }
+    }
+
+    public static class UpperFaceExpressionExtensions
+    {
+        public static bool IsTheSameThanPrevious(this UpperFaceExpression current, UpperFaceEnum newType, float newPower)
+        {
+            if (current.Type == newType && current.Power == newPower)
+                return true;
+
+            return false;
+
+        }
+       
     }
 }

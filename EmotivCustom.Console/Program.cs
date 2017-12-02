@@ -21,7 +21,14 @@ namespace MultiDongles
     class Program
     {
         EmoEngine engine;
-        private  SerialPortInterface _serialPortInterface;
+        private SerialPortInterface _serialPortInterface;
+        private const int BLINK = 01;
+        private const int UPPER_FACE_FROWN = 02;
+        private const int UPPER_FACE_SURPRISE = 03;
+        private const int LOWER_FACE_SMILE = 04;
+        private const int LOWER_FACE_CLENCH = 05;
+
+
 
         static void Main(string[] args)
         {
@@ -29,7 +36,8 @@ namespace MultiDongles
             program.Serial();
             program.mainLoop();
         }
-        void Serial() {
+        void Serial()
+        {
             _serialPortInterface = new SerialPortInterface("COM5");
         }
         void mainLoop()
@@ -42,17 +50,47 @@ namespace MultiDongles
 
             emoWrapper.FacialExpression.Subscribe(e =>
             {
-                if (e.Eyes.Type == EyeExpressionEnum.Blink) {
-                    _serialPortInterface.Write(07, 0);
-                    _serialPortInterface.Write(07, 250);
-                    Task.Factory.StartNew(() =>
+                if (e.Eyes.WasChanged)
+                {
+                    if (e.Eyes.Type == EyeExpressionEnum.Blink)
                     {
-                        Task.Delay(500).Wait();
-                        Console.WriteLine("Done");
-                        _serialPortInterface.Write(07, 0);
-                    });
+                        _serialPortInterface.Write(BLINK, 0);
+                        _serialPortInterface.Write(BLINK, 250);
+                        Task.Factory.StartNew(() =>
+                        {
+                            Task.Delay(500).Wait();
+                            Console.WriteLine("Done");
+                            _serialPortInterface.Write(BLINK, 0);
+                        });
+                    }
                 }
-             
+                if (e.LowerFace.WasChanged)
+                    {
+
+                     if (e.LowerFace.Type == LowerFaceEnum.Smile)
+                    {
+                        //_serialPortInterface.Write(06,  e.UpperFace.Power);
+                        _serialPortInterface.Write(LOWER_FACE_SMILE, e.LowerFace.Power);
+                    }
+                    else if (e.LowerFace.Type == LowerFaceEnum.Clench)
+                    {
+                        //_serialPortInterface.Write(06,  e.UpperFace.Power);
+                        _serialPortInterface.Write(LOWER_FACE_CLENCH, e.LowerFace.Power);
+                    }
+                }
+                if (e.UpperFace.WasChanged)
+                {
+                    if (e.UpperFace.Type == UpperFaceEnum.FurrowBrow)
+                    {
+                        //_serialPortInterface.Write(06,  e.UpperFace.Power);
+                        _serialPortInterface.Write(UPPER_FACE_FROWN, e.UpperFace.Power);
+                    }
+                    else if (e.UpperFace.Type == UpperFaceEnum.Surprise)
+                    {
+                        //_serialPortInterface.Write(06,  e.UpperFace.Power);
+                        _serialPortInterface.Write(UPPER_FACE_SURPRISE, e.UpperFace.Power);
+                    }
+                }
             });
 
             emoWrapper.EngineConnected.Subscribe(evt =>
